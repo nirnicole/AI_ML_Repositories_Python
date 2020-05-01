@@ -94,7 +94,7 @@ def breadthFirstSearch(problem):
   return  graphSearch(problem, util.Queue())
 
 def uniformCostSearch(problem):
-  return biasedGraphSearch(problem, util.PriorityQueue())
+  return biasedGraphSearch(problem, util.PriorityQueue(), nullHeuristic)
 
 def nullHeuristic(state, problem=None):
   return 0
