@@ -7,7 +7,6 @@ from random import randrange
     Author:  Nir Nicole
 """
 
-
 # Base class for all constraints
 class Constraint(object):
     # The variables that the constraint is between
