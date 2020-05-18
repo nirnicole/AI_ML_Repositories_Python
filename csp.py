@@ -18,8 +18,8 @@ class Constraint(object):
     @abc.abstractmethod
     def satisfied(self, assignment):
         """checking if X1,X2 can be given A,B or B,A (<(X1,X2),X1!=X2>)"""
-        return
-
+        return 
+    
     # Must be overridden by subclasses
     @abc.abstractmethod
     def Conflicts(self, assignment):
