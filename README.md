@@ -4,7 +4,7 @@ note:
 due to copyrights i have posted only the parts i wrote for the well known pacman school project i've worked on.
 
 # CSP:
-constrained search problems
+Constraint satisfaction problems
 you can see a basic framework for the csp,
 and a few impltmentaions such as:
 - CrossWord puzzle
