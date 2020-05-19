@@ -27,9 +27,7 @@ def testCrossword():
                              "bat", "bee",
                              "boa", "ear", "eel", "eft", "far", "fat", "fit", "lee", "oaf", "rat", "tar", "tie"]
 
-    csp_instance = csp.CSP(variables, domains)
-    csp_instance.heuristic_flags["MRV"] = True
-    csp_instance.heuristic_flags["LCV"] = False  # redundant, for notation only.
+    csp_instance = csp.CSP(variables, domains, {"MRV": True, "LCV": False})
 
     csp_instance.add_constraint(A1D1Constraint("A1", "D1"))
     csp_instance.add_constraint(A1D2Constraint("A1", "D2"))
@@ -52,8 +50,7 @@ def testCrossword():
     csp_instance.add_constraint(A3D2Constraint("D3", "A2"))
     csp_instance.add_constraint(A3D3Constraint("D3", "A3"))
 
-    assignment = {}
-    solution = csp_instance.backtracking_search(assignment)
+    solution = csp_instance.btsearch()
     if solution is None:
         print "No solution found!"
     else:
@@ -94,7 +91,9 @@ def testColoringPuzzl():
     csp_instance.add_constraint(MapColoringConstraint("Victoria", "Tasmania"))
 
     assignment = {}
-    solution = csp_instance.backtracking_search(assignment)
+    #solution = csp_instance.backtracking_search(assignment)
+    solution = csp_instance.btsearch()
+
     if solution is None:
         print "No solution found!"
     else:
@@ -124,7 +123,8 @@ def testEightQueens(n = 8):
     csp_instance.add_constraint(EightQueensConstraint(columns))
 
     assignment = {}
-    solution = csp_instance.backtracking_search(assignment)
+    solution = csp_instance.btsearch()
+
     if solution is None:
         print "No solution found!"
     else:
@@ -154,7 +154,7 @@ def testNQueens( n = 50):
     # here we can see the different approach,
     # given initial (WRONG) assignment to be fixed by given maximum steps.
     assignment = {k: randrange(0, n) for k in range(n)}
-    print assignment
+    print "chosen random invalid initial assignment:\n",assignment ,"\n"
     maximum_steps_allowed = n * 10
     solution = csp_instance.MinConflicts(maximum_steps_allowed, assignment)
 
@@ -171,4 +171,4 @@ def testNQueens( n = 50):
 testCrossword()
 testColoringPuzzl()
 testEightQueens()
-testNQueens(8)
+testNQueens(25)
