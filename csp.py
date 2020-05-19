@@ -3,7 +3,7 @@ import Util
 from random import randrange
 
 """
-    Summery: Basic framework for a Constraint search problem
+    Summery: Basic framework for a Constraint satisfaction problem
     Author:  Nir Nicole
 """
 
