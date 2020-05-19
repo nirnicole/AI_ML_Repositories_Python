@@ -7,6 +7,7 @@ from random import randrange
     Author:  Nir Nicole
 """
 
+
 # Base class for all constraints
 class Constraint(object):
     # The variables that the constraint is between
@@ -17,13 +18,14 @@ class Constraint(object):
     @abc.abstractmethod
     def satisfied(self, assignment):
         """checking if X1,X2 can be given A,B or B,A (<(X1,X2),X1!=X2>)"""
-        return 
-    
+        return
+
     # Must be overridden by subclasses
     @abc.abstractmethod
     def Conflicts(self, assignment):
         """checking how many conflicts has been created by an assignment"""
         return
+
 
 # A constraint satisfaction problem consists of variables of type V
 # that have ranges of values known as domains of type D and constraints
@@ -72,18 +74,20 @@ class CSP(object):
                 return False
         return True
 
+
     """ kind of recursive depth-first search. This functions added as a method to the CSP class."""
+    def btsearch(self):
+        return self.btSearchDfs({})
 
-    def backtracking_search(self, assignment):
-        # assignment = dictionary of {variable: domain list[] }
-        # assignment is complete if every variable is assigned (our base case)
-        if len(assignment) == len(self.variables):
-            return assignment
+    def btSearchDfs(self, assignment):
 
-        # get all variables in the CSP but not in the assignment
         unassigned = [v for v in self.variables if v not in assignment]
 
-        """ get the every possible domain value of the chosen_variable unassigned variable"""
+        """goal test"""
+        if len(unassigned) == 0:
+            return assignment
+
+        """choose variable with MRV heuristic"""
         if self.heuristic_flags["MRV"]:
             chosen_variable = self.MRVhuristicScore(unassigned)
         else:
@@ -96,15 +100,12 @@ class CSP(object):
             sorted_domain = self.domains[chosen_variable]
 
         for value in sorted_domain:
-            local_assignment = assignment.copy()
-            # Here we assign value to a variable !
-            local_assignment[chosen_variable] = value
-            # if we're still consistent, we recurse (continue)
-            if self.consistent(chosen_variable, local_assignment):
-                result = self.backtracking_search(local_assignment)
-                # if we didn't find the result, we will end up backtracking
-                if result is not None:
+            assignment[chosen_variable] = value         # Here we assign value to a variable !
+            if self.consistent(chosen_variable, assignment):        # if we're still consistent, we recurse (continue)
+                result = self.btSearchDfs(assignment)
+                if result != None:
                     return result
+            assignment.pop(chosen_variable, None)         # if we didn't find the result, we will end up backtracking without this option
         return None
 
     def MRVhuristicScore(self, unassigned_variables):
@@ -145,7 +146,6 @@ class CSP(object):
         # print new_domain_as_list
         return new_domain_as_list
 
-
     def MinConflicts(self, max_steps, assignment):
         """ gets itself = csp problem with attributes.
             max_steps = the number of steps allowed before giving up."""
@@ -155,7 +155,7 @@ class CSP(object):
         # current = an initial complete assignment for csp.
         current = assignment
 
-        for i in range(1,max_steps):
+        for i in range(1, max_steps):
 
             found_solution = True
             # if current is solution return it
@@ -174,15 +174,15 @@ class CSP(object):
                     if not constraint.satisfied(current):
                         is_not_conflicting = False
 
-            maximum = 0   # initialize to minimum
+            maximum = 0  # initialize to minimum
             var_conflicting = []
             for potential_var in self.variables:
                 current_num_of_conflicts = constraint.Conflicts(current, potential_var)
-                if current_num_of_conflicts>0 and current_num_of_conflicts >= maximum:
+                if current_num_of_conflicts > 0 and current_num_of_conflicts >= maximum:
                     maximum = constraint.Conflicts(current, potential_var)
                     var_conflicting.append(potential_var)
 
-            var = var_conflicting[randrange(0, len(var_conflicting) )]
+            var = var_conflicting[randrange(0, len(var_conflicting))]
 
             # choose the var value that minimize Conflicts function (function that
             # counts the number of constrains violated by practicular value, given
@@ -194,13 +194,12 @@ class CSP(object):
                 optional_current = current.copy()
                 optional_current[var] = value_candidate
                 if constraint.Conflicts(optional_current, var) <= minimum:
-                    minimum = constraint.Conflicts(optional_current,var)
+                    minimum = constraint.Conflicts(optional_current, var)
                     value_options.append(value_candidate)
 
-            current[var] = value_options[randrange(0, len(value_options) )]
+            current[var] = value_options[randrange(0, len(value_options))]
 
         return None
-
 
     def clear(self):
         self.variables = None
