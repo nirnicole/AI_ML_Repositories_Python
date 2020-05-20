@@ -1,5 +1,4 @@
 from random import randrange
-
 from EightQueensConstrains import *
 from MapColoringConstrains import *
 from CrosswordConstrains import *
@@ -50,6 +49,9 @@ def testCrossword():
     csp_instance.add_constraint(A3D2Constraint("D3", "A2"))
     csp_instance.add_constraint(A3D3Constraint("D3", "A3"))
 
+    for index in range(5):
+        csp_instance.ac3()
+
     solution = csp_instance.btsearch()
     if solution is None:
         print "No solution found!"
@@ -90,6 +92,9 @@ def testColoringPuzzl():
     csp_instance.add_constraint(MapColoringConstraint("Victoria", "New South Wales"))
     csp_instance.add_constraint(MapColoringConstraint("Victoria", "Tasmania"))
 
+    for index in range(5):
+        csp_instance.ac3()
+
     assignment = {}
     #solution = csp_instance.backtracking_search(assignment)
     solution = csp_instance.btsearch()
@@ -122,6 +127,9 @@ def testEightQueens(n = 8):
 
     csp_instance.add_constraint(EightQueensConstraint(columns))
 
+    for index in range(5):
+        csp_instance.ac3()
+
     assignment = {}
     solution = csp_instance.btsearch()
 
@@ -136,7 +144,7 @@ def testEightQueens(n = 8):
 
 """-------------------------------------------------------------------------"""
 """The n queens test - Minimum Conflicts implementation:"""
-def testNQueens( n = 50):
+def testNQueens( n = 8):
 
     print "\ntesting Eight queens with Minimum Conflicts implementation:\n"
     start_time = timeit.default_timer()
@@ -150,6 +158,9 @@ def testNQueens( n = 50):
     csp_instance = csp.CSP(columns, rows)
 
     csp_instance.add_constraint(EightQueensConstraint(columns))
+
+    for index in range(20):
+        csp_instance.ac3()
 
     # here we can see the different approach,
     # given initial (WRONG) assignment to be fixed by given maximum steps.
