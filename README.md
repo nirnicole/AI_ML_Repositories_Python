@@ -4,6 +4,7 @@ I will post here varius algorithms and concepts i will explore!
 # CSP:
 Constraint satisfaction problems, <br/>
 you can see a basic framework for the csp.<br/>
+<br/>
 topics coverd in csp.py (framework file):
 - Backtrack algorithm
 - AC-3 algorithm (constraint propagation)
