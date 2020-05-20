@@ -1,10 +1,8 @@
 # AI_algorithms_Python
-
-note:
-due to copyrights i have posted only the parts i wrote for the well known pacman school project i've worked on.
+I will post here varius algorithms and concepts i will explore!
 
 # CSP:
-Constraint satisfaction problems \n
+Constraint satisfaction problems <br/>
 you can see a basic framework for the csp.
 topics coverd in csp.py (framework file):
 - Backtrack algorithm
@@ -18,8 +16,14 @@ also a few problem impltmentaions in tester.py such as:
 - 8-queens csp solver
 - N-queens local csp solver with Minimum-conflicts huristic approach
 
-you can also find a tester to run those and see solutions and time assessments
+# Searches:
+Graph Searches in Graph_Searches.py:
+- Depth First Search
+- Breadth First Search
+- Uniform Cost Search (Dijkstra)
+- A*
 
-I will post here varius algorithms and concepts i will explore in the AI course im currently on!
+Local Searches in Genetic_Algorithm.py:
+- Genetic algorithm
 
 # enjoy!
