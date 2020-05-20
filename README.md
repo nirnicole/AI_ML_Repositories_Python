@@ -1,4 +1,4 @@
-# AI_algorithms_Python
+# Artificial Intelligence (python)
 I will post here varius algorithms and concepts i will explore!
 
 # CSP:
