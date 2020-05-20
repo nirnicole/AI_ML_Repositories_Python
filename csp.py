@@ -3,7 +3,7 @@ import Util
 from random import randrange
 
 """
-    Summery: Basic framework for a Constraint satisfaction problem
+    Summery: Basic framework for a Constraint search problem
     Author:  Nir Nicole
 """
 
@@ -46,6 +46,7 @@ class CSP(object):
             heuristic_flags = {"MRV": False, "LCV": False}
         # heuristic flags allow you to disable framework huristic if they are a burden.
         self.heuristic_flags = heuristic_flags
+        self.arcs = {"unaryArc" : [] , "binarArc": [], "nArc": []}
 
         for variable in self.variables:
             self.constraints[variable] = []
@@ -54,7 +55,6 @@ class CSP(object):
 
     """method goes through all of the variables touched by a given constraint and adds
        itself to the constraints mapping for each of them. """
-
     def add_constraint(self, constraint):
         # constraint: Constraint[V, D]) -> None
         for variable in constraint.variables:
@@ -62,6 +62,14 @@ class CSP(object):
                 raise LookupError("Variable in constraint not in CSP")
             else:
                 self.constraints[variable].append(constraint)
+        # also create an arc associating with the constrain variables.
+        arc = constraint.variables
+        if len(arc) == 1:
+            self.arcs["unaryArc"].append(arc)
+        if len(arc) == 2:
+            self.arcs["binarArc"].append(arc)
+        elif len(arc) > 2:
+            self.arcs["nArc"].append(arc)
 
     # Check if the value assignment is consistent by checking all constraints for the given variable against it
     # assignment = given configuration of variables and selected domains that should statisfy the constrains.
@@ -107,6 +115,41 @@ class CSP(object):
                     return result
             assignment.pop(chosen_variable, None)         # if we didn't find the result, we will end up backtracking without this option
         return None
+
+    """ AC-3 detects conflicts that you will have in attributions, during the backtracking, and deletes them"""
+    def ac3(self):
+
+        # creating the arcs queue
+        queue = Util.Queue()
+        for arc in self.arcs["binarArc"]:
+            if len(arc)!=2:
+                raise LookupError("AC-3 work with binary arcs only.")
+            else:
+                queue.push(arc)
+
+        # remove values from arcs domains till their are none to remove
+        while not queue.isEmpty():
+            x,y = queue.pop()
+            if self.RemoveInconsistentValues(x,y):
+               # Every time a value is removed from the domain, you'll have to recheck the neighbors of x.
+               for arc in self.arcs:
+                    if y not in arc:
+                        queue.push(arc)
+
+    # here we implement the value remove.
+    def RemoveInconsistentValues(self, x,y):
+        value_removed_flag = False
+        temp_assignment = {}        # temp assigning to check constrain only!
+        for x_value in self.domains[x]:
+            is_consistent = False
+            temp_assignment[x] = x_value
+            for y_value in self.domains[y]:
+                temp_assignment[y] = y_value
+                if self.consistent(x, temp_assignment):
+                    is_consistent = True
+            if not is_consistent:
+                self.domains[x].remove(x_value)
+        return value_removed_flag
 
     def MRVhuristicScore(self, unassigned_variables):
         #  print unassigned_variables
