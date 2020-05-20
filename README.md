@@ -4,7 +4,7 @@ note:
 due to copyrights i have posted only the parts i wrote for the well known pacman school project i've worked on.
 
 # CSP:
-Constraint satisfaction problems
+Constraint satisfaction problems \n
 you can see a basic framework for the csp.
 topics coverd in csp.py (framework file):
 - Backtrack algorithm
