@@ -8,9 +8,9 @@ Constraint satisfaction problems
 you can see a basic framework for the csp.
 topics coverd in csp.py (framework file):
 - Backtrack algorithm
-- AC-3 algorithm
-- MRV,Degree,LCV heuristics
+- AC-3 algorithm (constraint propagation)
 - Minimum-Conflicts algorithm
+- MRV,Degree,LCV heuristics
 
 also a few problem impltmentaions in tester.py such as:
 - CrossWord puzzle
