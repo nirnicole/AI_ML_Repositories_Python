@@ -9,11 +9,11 @@ topics coverd in Problem.py (framework file):
 - abstract implemetaion of a basic GA algorihm, a Must read!
 - Genetic Algorithm function, simulating the "Servival Of The Fittest" concept on a problem.
 
-topics coverd in Maze.py (framework file):
+topics coverd in Maze.py :
 - solving mazes or simple routing problems.
 - processing images to a binar data matrix for the solver. 
 
-topics coverd in Cards.py (framework file):
+topics coverd in Cards.py :
 - solving a group problem for a set of cards.
 
 # CSP:
