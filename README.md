@@ -39,7 +39,4 @@ Graph Searches in Graph_Searches.py:
 - Uniform Cost Search (Dijkstra)
 - A*
 
-Local Searches in Genetic_Algorithm.py:
-- Genetic algorithm
-
 # enjoy!
